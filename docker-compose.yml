@@ -9,6 +9,7 @@ services:
       - /dev/net/tun:/dev/net/tun
     ports:
       - ${PROXY_PORT}:8888/tcp # HTTP proxy
+      - 9091:9091/tcp # Transmission web UI (container uses network_mode: container:vpn)
     environment:
       - VPN_SERVICE_PROVIDER=protonvpn
       - VPN_TYPE=wireguard
