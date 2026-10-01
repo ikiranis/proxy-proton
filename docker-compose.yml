@@ -11,6 +11,7 @@ services:
       - ${PROXY_PORT}:8888/tcp # HTTP proxy
       - 1080:1080  # Θα περάσει μέσω
     environment:
+      - VPN_SERVICE_PROVIDER=protonvpn
       - VPN_TYPE=wireguard
       - SERVER_COUNTRIES=${SERVER_COUNTRIES}
       - TZ=Europe/Finland
