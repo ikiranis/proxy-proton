@@ -9,21 +9,12 @@ services:
       - /dev/net/tun:/dev/net/tun
     ports:
       - ${PROXY_PORT}:8888/tcp # HTTP proxy
-      - 1080:1080  # Θα περάσει μέσω
     environment:
       - VPN_SERVICE_PROVIDER=protonvpn
       - VPN_TYPE=wireguard
       - SERVER_COUNTRIES=${SERVER_COUNTRIES}
-      - TZ=Europe/Finland
+      - TZ=Europe/Helsinki
       - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
-      
-  socks5:
-    restart: always
-    image: serjs/go-socks5-proxy
-    container_name: vpnSocks5
-    depends_on:
-      - gluetun
-    network_mode: "service:gluetun"
-    environment:
-      - PROXY_USER=${PROXY_USER}
-      - PROXY_PASSWORD=${PROXY_PASSWORD}
+      - HTTPPROXY=on
+      - HTTPPROXY_USER=${PROXY_USER}
+      - HTTPPROXY_PASSWORD=${PROXY_PASSWORD}
