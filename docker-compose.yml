@@ -1,7 +1,7 @@
 services:
   gluetun:
     image: qmcgaw/gluetun
-    container_name: vpnProtonNEW
+    container_name: vpn
     restart: always
     cap_add:
       - NET_ADMIN
@@ -10,6 +10,7 @@ services:
     ports:
       - ${PROXY_PORT}:8888/tcp # HTTP proxy
       - 1080:1080  # Θα περάσει μέσω
+    environment:
       - VPN_TYPE=wireguard
       - SERVER_COUNTRIES=${SERVER_COUNTRIES}
       - TZ=Europe/Finland
