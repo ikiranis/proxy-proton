@@ -1,0 +1,27 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: vpnProtonNEW
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - ${PROXY_PORT}:8888/tcp # HTTP proxy
+      - 1080:1080  # Θα περάσει μέσω
+      - VPN_TYPE=wireguard
+      - SERVER_COUNTRIES=${SERVER_COUNTRIES}
+      - TZ=Europe/Finland
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      
+  socks5:
+    restart: always
+    image: serjs/go-socks5-proxy
+    container_name: vpnSocks5
+    depends_on:
+      - gluetun
+    network_mode: "service:gluetun"
+    environment:
+      - PROXY_USER=${PROXY_USER}
+      - PROXY_PASSWORD=${PROXY_PASSWORD}
